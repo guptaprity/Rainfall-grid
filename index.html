@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Grid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ui-panel">
+        <h1>Rainfall Grid Game</h1>
+    </div>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ul>
+            <li>Enjoy the dynamic rainfall effect.</li>
+            <li>Colors and raindrops are randomly generated.</li>
+            <li>Feel free to experiment with grid sizes!</li>
+        </ul>
+    </div>
+
+    <div class="container" id="rain-grid"></div>
+    <script>
+        const gridContainer = document.getElementById('rain-grid');
+    
+        function createGrid(rows, cols) {
+            gridContainer.innerHTML = '';
+            for (let i = 0; i < rows * cols; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                gridContainer.appendChild(cell);
+            }
+        }
+    
+        function createRainEffect(cols) {
+            const cells = document.querySelectorAll('.cell');
+            for (let col = 0; col < cols; col++) {
+                if (Math.random() < 0.2) { // Adjust density of raindrops
+                    const cellIndex = col + Math.floor(Math.random() * 20) * cols;
+                    const cell = cells[cellIndex];
+                    if (cell) {
+                        const drop = document.createElement('div');
+                        drop.classList.add('drop');
+                        drop.style.animationDuration = `${Math.random() * 1.5 + 1}s`;
+                        cell.appendChild(drop);
+    
+                        drop.addEventListener('animationend', () => {
+                            drop.remove();
+                        });
+                    }
+                }
+            }
+        }
+    
+        const rows = 20;
+        const cols = 15;
+        createGrid(rows, cols);
+    
+        setInterval(() => createRainEffect(cols), 300);
+    </script>    
+  
+</body>
+</html>
+
+
